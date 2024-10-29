@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Interactivo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="app">
+    <div v-if="!nombreIngresado">
+      <h2>Bienvenido al Test</h2>
+      <label>Ingresa tu nombre:</label>
+      <input v-model="nombre" type="text" placeholder="Nombre">
+      <button @click="ingresarNombre">Comenzar</button>
+    </div>
+
+    <div v-else>
+      <h2>Hola, {{ nombre }}. ¡Completa el test!</h2>
+      <div v-for="(pregunta, index) in preguntas" :key="index" class="pregunta">
+        <p>{{ pregunta.texto }}</p>
+        <div v-for="(respuesta, i) in pregunta.respuestas" :key="i">
+          <label>
+            <input type="radio" :name="'pregunta' + index" :value="respuesta.puntos" v-model="respuestas[index]">
+            {{ respuesta.texto }}
+          </label>
+        </div>
+      </div>
+      <button @click="calcularPuntaje">Enviar respuestas</button>
+
+
+      <div v-if="mostrarResultado">
+        <h3>Resultados de {{ nombre }}</h3>
+        <p>{{ resultado }}</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
